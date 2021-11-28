@@ -3,14 +3,7 @@ import { galleryItems } from './gallery-items.js';
 
 console.log(galleryItems);
 
-const refs = {
-    gallery: document.querySelector('.gallery'),
-    galleryItem: document.querySelector('.gallery__item'),
-    galleryLink: document.querySelector('.gallery__link'),
-    galleryImage: document.querySelector('.gallery__image'),
-    galleryModal: "",
-    imageCaption: "",
-};
+const gallery = document.querySelector('.gallery');
 
 createGalleryMarkup(galleryItems);
 function createGalleryMarkup(galleryItems) {
@@ -23,16 +16,17 @@ function createGalleryMarkup(galleryItems) {
                     class="gallery__image"
                     src="${item.preview}"
                     alt="${item.description}"
+
                 />
             </a>
         `
         )
         .join(" ");
 
-    refs.gallery.innerHTML = markup;
+    gallery.innerHTML = markup;
 };
 
-refs.gallery.addEventListener('click', openModal);
+gallery.addEventListener('click', openModal);
 function openModal(event) {
 
         event.preventDefault();
@@ -41,10 +35,11 @@ function openModal(event) {
             return
         }
 
-    console.log('click on image');
-    refs.imageCaption = event.target.alt;
-    console.log(refs.imageCaption);
-    refs.galleryModal = new SimpleLightbox('.gallery a', { captionType: "${refs.imageCaption}", animationSpeed: "250" });
+    const galleryModal = new SimpleLightbox('.gallery a');
+    galleryModal.on("show.simplelightbox", function () {
+        galleryModal.options.captionDelay = 250;
+        galleryModal.options.captionsData = 'alt';
+    })
 };
 
 
