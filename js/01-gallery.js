@@ -52,10 +52,10 @@ function openModal(event) {
             </div>
 `);
         refs.galleryModal.show()
-        document.body.addEventListener('keydown', closeModal);
+        document.body.addEventListener('keydown', onEscKeyPress);
 }
 
-    function closeModal(event) {
+    function onEscKeyPress(event) {
         const isEscKey = event.code === 'Escape';
         const galleryIsFilled = refs.galleryModal !== "";
         if (isEscKey || galleryIsFilled) {
